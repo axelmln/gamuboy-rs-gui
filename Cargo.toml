@@ -1,0 +1,38 @@
+[package]
+name = "gamuboy_rs_gui"
+version = "0.1.0"
+edition = "2021"
+authors = ["Axel Maulion"]
+description = "A GameBoy emulator using rust-sdl2"
+repository = "https://github.com/axelmln/gamuboy-rs-gui"
+homepage = "https://github.com/axelmln/gamuboy-rs-gui"
+keywords = ["emulator", "gameboy", "rust"]
+categories = ["emulators", "games"]
+readme = "README.md"
+
+[dependencies]
+gamuboy = { git = "https://github.com/axelmln/gamuboy-rs" }
+
+[target.'cfg(target_os = "linux")'.dependencies.sdl2]
+version = "0.37"
+default-features = false
+features = ["mixer", "static-link", "bundled"]
+
+[target.'cfg(target_os = "macos")'.dependencies.sdl2]
+version = "0.37"
+default-features = false
+features = ["mixer", "static-link", "bundled"]
+
+[target.'cfg(target_os = "windows")'.dependencies.sdl2]
+version = "0.37"
+default-features = false
+features = ["mixer", "static-link", "use-vcpkg"]
+
+[package.metadata.vcpkg]
+dependencies = ["sdl2", "sdl2-mixer"]
+git = "https://github.com/microsoft/vcpkg"
+rev = "2025.04.09" # to check for a new one, check https://github.com/microsoft/vcpkg/releases
+
+[package.metadata.vcpkg.target]
+x86_64-pc-windows-msvc = { triplet = "x64-windows-static-md" }
+
