@@ -5,7 +5,7 @@ It uses [gamuboy-rs](https://github.com/axelmln/gamuboy-rs) as the emulation cor
 
 ## Usage
 
-Run the executable with the first argument being the path to the rom you want to play.  
+Run the [executable](https://github.com/axelmln/gamuboy-rs-gui/releases) with the first argument being the path to the rom you want to play.  
 By default the boot sequence is skipped. You can specify a bootrom with the `--bootrom` parameter.  
 
 ```
@@ -40,7 +40,7 @@ $ sudo apt install -y \
             libudev-dev
 ```  
 
-On Windows you need to set up vckpg:
+On Windows you need to set up vcpkg:
 ```
 $ cd gamuboy-rs-gui
 $ cargo install cargo-vcpkg
