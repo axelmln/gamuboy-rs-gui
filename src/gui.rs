@@ -15,14 +15,14 @@ impl Gui {
         Self {
             canvas,
             texture,
-            pixel_buffer: vec![0u8; lcd::PIXELS_WIDTH * lcd::PIXELS_HEIGHT * 4],
+            pixel_buffer: vec![0u8; lcd::PIXELS_WIDTH * lcd::PIXELS_HEIGHT * 3],
         }
     }
 
     fn fill_pixel_buffer(&mut self, matrix: &FrameBuffer) {
         for (y, line) in matrix.iter().enumerate() {
             for (x, pixel) in line.iter().enumerate() {
-                let i = (y * lcd::PIXELS_WIDTH + x) * 4;
+                let i = (y * lcd::PIXELS_WIDTH + x) * 3;
                 self.pixel_buffer[i] = pixel.0;
                 self.pixel_buffer[i + 1] = pixel.1;
                 self.pixel_buffer[i + 2] = pixel.2;
@@ -36,7 +36,7 @@ impl LCD for Gui {
         self.fill_pixel_buffer(matrix);
 
         self.texture
-            .update(None, &self.pixel_buffer, lcd::PIXELS_WIDTH * 4)
+            .update(None, &self.pixel_buffer, lcd::PIXELS_WIDTH * 3)
             .unwrap();
 
         self.canvas.clear();

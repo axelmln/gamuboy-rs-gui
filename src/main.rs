@@ -5,6 +5,7 @@ use gamuboy::{
     config::Config,
     gameboy::GameBoy,
     lcd::{self},
+    mode::Mode,
     saver::FileSaver,
 };
 use gui::Gui;
@@ -44,11 +45,17 @@ fn main() {
 
     let bootrom_path = get_string_argument(&argv, "bootrom");
 
+    let rom = match fs::read(rom_path) {
+        Ok(rom) => rom,
+        Err(err) => panic!("Error occured reading rom: {}", err),
+    };
+
     let cfg = Config {
-        rom: match fs::read(rom_path) {
-            Ok(rom) => rom,
-            Err(err) => panic!("Error occured reading rom: {}", err),
+        mode: match rom[0x143] {
+            0x80 | 0xC0 => Mode::CGB,
+            _ => Mode::DMG,
         },
+        rom,
         headless_mode: false,
         bootrom: match bootrom_path {
             Some(bootrom_path) => match fs::read(bootrom_path) {
@@ -82,7 +89,7 @@ fn main() {
         std::mem::transmute(
             texture_creator
                 .create_texture_streaming(
-                    PixelFormatEnum::RGB888,
+                    PixelFormatEnum::RGB24,
                     lcd::PIXELS_WIDTH as u32,
                     lcd::PIXELS_HEIGHT as u32,
                 )

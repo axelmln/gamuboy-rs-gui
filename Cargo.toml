@@ -12,6 +12,7 @@ readme = "README.md"
 
 [dependencies]
 gamuboy = { git = "https://github.com/axelmln/gamuboy-rs" }
+#gamuboy = { path = "../gamuboy-rs" }
 
 [target.'cfg(target_os = "linux")'.dependencies.sdl2]
 version = "0.37"
